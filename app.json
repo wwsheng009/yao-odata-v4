@@ -1,0 +1,20 @@
+{
+  "name": "::Demo Application",
+  "menu": {
+    "process": "flows.app.menu",
+    "args": [
+      "demo"
+    ]
+  },
+  "xgen": "1.0",
+  "short": "::Demo",
+  "description": "::Another yao application",
+  "version": "0.10.3",
+  "setup": "",
+  "adminRoot": "admin",
+  "optional": {
+    "hideNotification": true,
+    "hideSetting": false,
+    "remoteCache": false
+  }
+}
