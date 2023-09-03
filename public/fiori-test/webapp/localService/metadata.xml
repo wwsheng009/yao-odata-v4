@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="OdataService">
+			<EntityType Name="table">
+				<Key>
+					<PropertyRef Name="id"/>
+				</Key>
+				<Property Name="id" Type="Edm.Int32" Nullable="false"/>
+				<Property Name="engine" Type="Edm.String"/>
+				<Property Name="browser" Type="Edm.String"/>
+				<Property Name="platform" Type="Edm.String"/>
+				<Property Name="version" Type="Edm.String"/>
+				<Property Name="grade" Type="Edm.String"/>
+			</EntityType>
+			<EntityContainer Name="Container">
+				<EntitySet Name="table" EntityType="OdataService.table"/>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,18 @@
+{
+  "name": "odata-v4-tutorial",
+  "private": true,
+  "version": "1.0.0",
+  "author": "SAP SE",
+  "description": "UI5 Demo App - ODataV4 Tutorial",
+  "scripts": {
+    "start": "fiori run --open 'index.html'"
+  },
+  "dependencies": {
+    "@openui5/themelib_sap_belize": "^1",
+    "@sap/ux-ui5-tooling": "1",
+    "@ui5/cli": "^3.5.0",
+    "@ui5/fs": "2.0.1",
+    "@ui5/logger": "2.0.0",
+    "rimraf": "3.0.0"
+  }
+}
