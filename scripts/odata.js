@@ -20,10 +20,17 @@ function postData(
   console.log(">>>>>>>>>>>>>>>>>>>>called post");
   console.log("post payload:", payload);
   console.log("parts:", parts.length, parts);
+
   let metaFullPath = getMetaFullPath(fullpath, schema, host);
 
+  if (pathIn === "/$batch") {
+    return processBatchPost(headers, parts);
+  }
+}
+
+function processBatchPost(metaFullPath, headers, parts) {
   //parts
-  aRequest = decodePartsRequest(headers, parts);
+  aRequest = decodePartsRequest(metaFullPath, headers, parts);
 
   let sResponse = "";
   let iTotalLen = 0;
