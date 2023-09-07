@@ -161,7 +161,8 @@ function getDataFromRequest(oRequest, basePath) {
     } else {
       const data = convertJsonToXml(data1, oQsl.entitySet, basePath);
       return {
-        type: "application/atom+xml;type=feed;charset=utf-8",
+        // type: "application/atom+xml;type=feed;charset=utf-8",
+        type: "application/atom+xml;charset=utf-8",
         status: 200,
         data: data,
       };

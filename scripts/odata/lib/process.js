@@ -36,9 +36,9 @@ function convertJsonToXml(json, sModelName, sBaseUrl) {
   const entrys = convertEntrys(json, sModelName, sBaseUrl);
 
   const xml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<feed xml:base="https://services.odata.org/V2/OData/OData.svc/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+<feed xml:base="${sBaseUrl}" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
     <title type="text">${sModelName}</title>
-    <id>https://services.odata.org/V2/OData/OData.svc/${sModelName}</id>
+    <id>${sBaseUrl}${sModelName}</id>
     <updated>2023-09-07T04:58:35Z</updated>
     <link rel="self" title="${sModelName}" href="${sModelName}" />
     ${entrys.join("")}
@@ -63,20 +63,22 @@ function convertEntrys(json, sModelName, sBaseUrl) {
         // column info
         if (colObj[key]) {
           const edmType = getEdmType(colObj[key]);
-          colXmlstr += `<d:${key} m:type="${edmType}">${element}</d:${key}>`;
+          colXmlstr += `<d:${key} m:type="${edmType}">${element}</d:${key}>
+              `;
         }
       }
     }
     entrys.push(`<entry>
-    <id>${sBaseUrl}${sModelName}(${item.id})</id>
-    <link rel="edit" title="${sModelName}" href="${sModelName}(${item.id})" />
-    <category term="OdataService.${sModelName}" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
-    <content type="application/xml">
-        <m:properties>
-            ${colXmlstr}
-        </m:properties>
-    </content>
-</entry>`);
+      <id>${sBaseUrl}${sModelName}(${item.id})</id>
+      <link rel="edit" title="${sModelName}" href="${sModelName}(${item.id})" />
+      <category term="OdataService.${sModelName}" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+      <content type="application/xml">
+          <m:properties>
+              ${colXmlstr}
+          </m:properties>
+      </content>
+    </entry>
+`);
   }
   return entrys;
 }

@@ -86,9 +86,9 @@ function ConvertUrlToQsl(oUrl) {
   if (part3 == "$entity") {
   }
 
-  let format = "xml";
+  let format = "json";
   if (headers["Accept"] && headers["Accept"].length) {
-    if (headers["Accept"][0].toLowerCase().includes("application/xml")) {
+    if (headers["Accept"][0].toLowerCase().includes("xml")) {
       format = "xml";
     }
   }
