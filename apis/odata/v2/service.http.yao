@@ -25,7 +25,7 @@
       "out": {
         "status": 200,
         "Body": "{{data}}",
-        "Headers": { "Content-Type": "{{type}}" }
+        "Headers": { "Content-Type": "{{type}}", "DataServiceVersion": "2.0" }
       }
     },
     {

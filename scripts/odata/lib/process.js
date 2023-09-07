@@ -48,26 +48,27 @@ function convertJsonToXml(json, sModelName, sBaseUrl) {
 function convertEntrys(json, sModelName, sBaseUrl) {
   const model = getModel(sModelName);
 
-  const colObj = {};
-  model.columns.forEach((col) => {
-    colObj[col.name] = col;
-  });
-
   const entrys = [];
   for (const item of json) {
     let colXmlstr = "";
-    for (const key in item) {
+    // 不要直接循环item对象，那个索引是随机的。
+    model.columns.forEach((col) => {
+      const key = col.name;
       if (Object.hasOwnProperty.call(item, key)) {
-        const element = item[key];
-
         // column info
-        if (colObj[key]) {
-          const edmType = getEdmType(colObj[key]);
-          colXmlstr += `<d:${key} m:type="${edmType}">${element}</d:${key}>
-              `;
+
+        let element = item[key];
+
+        let edmType = getEdmType(col);
+        // edmType = "Edm.String";
+        if (edmType == "Edm.String") {
+          element = escapedXmlString(element);
         }
+        colXmlstr += `<d:${key} m:type="${edmType}">${element}</d:${key}>
+              `;
       }
-    }
+    });
+
     entrys.push(`<entry>
       <id>${sBaseUrl}${sModelName}(${item.id})</id>
       <link rel="edit" title="${sModelName}" href="${sModelName}(${item.id})" />
@@ -81,6 +82,26 @@ function convertEntrys(json, sModelName, sBaseUrl) {
 `);
   }
   return entrys;
+}
+function escapedXmlString(str) {
+  if (!str.hasOwnProperty("replace")) {
+    return str;
+  }
+  const strXml = str.replace(/[&<>"']/g, (char) => {
+    switch (char) {
+      case "&":
+        return "&amp;";
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case '"':
+        return "&quot;";
+      case "'":
+        return "&apos;";
+    }
+  });
+  return strXml;
 }
 
 function getEdmType(column) {
