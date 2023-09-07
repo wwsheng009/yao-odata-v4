@@ -31,6 +31,17 @@ function getModelsEntityset() {
   return modelObj;
 }
 
+function getModelNameList() {
+  const modelsList = Process("widget.models");
+  const list = modelDefinitionList(modelsList);
+  // Process("models.system.api.eachsave", list);
+  let modelObj = [];
+  list.forEach((model) => {
+    modelObj.push(model.ID);
+  });
+  return modelObj;
+}
+
 function getModelsEntityset2() {
   const modelsList = Process("widget.models");
   const list = modelDefinitionList(modelsList);
@@ -127,4 +138,5 @@ module.exports = {
   getModels,
   getModelsEntityset,
   getModel,
+  getModelNameList,
 };

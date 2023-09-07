@@ -43,6 +43,8 @@ const validator = {
 
 function ConvertUrlToQsl(oUrl) {
   // console.log("oUrl====>", oUrl);
+  const headers = oUrl.headers;
+
   let pathParam = oUrl.URL.path;
   const query = oUrl.URL.query;
 
@@ -84,7 +86,12 @@ function ConvertUrlToQsl(oUrl) {
   if (part3 == "$entity") {
   }
 
-  let format = "json";
+  let format = "xml";
+  if (headers["Accept"] && headers["Accept"].length) {
+    if (headers["Accept"][0].toLowerCase().includes("application/xml")) {
+      format = "xml";
+    }
+  }
   if (query["$format"] && query["$format"].length) {
     format = query["$format"][0].trim();
   }
