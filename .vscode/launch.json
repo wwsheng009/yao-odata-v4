@@ -8,8 +8,13 @@
       "type": "node",
       "request": "launch",
       "name": "debug js",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${file}"
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${file}",
+      "args": [
+        "--verbose"
+      ]
     }
   ]
 }

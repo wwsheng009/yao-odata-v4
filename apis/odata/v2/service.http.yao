@@ -6,7 +6,7 @@
   "guard": "-",
   "paths": [
     {
-      // api/v1/odata/
+      // api/odata/v2/service/table
       "name": "入口",
       "description": "get请求入口",
       "path": "/*path",
@@ -25,7 +25,10 @@
       "out": {
         "status": 200,
         "Body": "{{data}}",
-        "Headers": { "Content-Type": "{{type}}", "DataServiceVersion": "2.0" }
+        "Headers": {
+          "Content-Type": "{{type}}",
+          "DataServiceVersion": "2.0"
+        }
       }
     },
     {
@@ -68,7 +71,6 @@
         "status": 200
       }
     },
-
     {
       // api/v1/odata/
       "name": "入口",
@@ -80,7 +82,9 @@
       "in": [],
       "out": {
         "status": 200,
-        "Headers": { "X-CSRF-Token": "123123" }
+        "Headers": {
+          "X-CSRF-Token": "123123"
+        }
       }
     }
   ]

@@ -1,0 +1,22 @@
+{
+  "name": "mock data",
+  "version": "1.0.0",
+  "description": "mock data",
+  "group": "",
+  "guard": "-",
+  "paths": [
+    {
+      //api/async/test
+      "name": "test async data",
+      "path": "test",
+      "method": "get",
+      "guard": "-",
+      "process": "scripts.async.test",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

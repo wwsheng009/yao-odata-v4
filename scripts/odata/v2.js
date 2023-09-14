@@ -76,26 +76,28 @@ function getBasePath(fullpath, schema, host) {
   let fullPath = `${schema}://${host}${rootpath}/`;
   return fullPath;
 }
+
 /**
  * 转换查询参数
  * 注意：golang 不支持在query里带有符号;
- * @param {string} pathIn url path
+ * @param {string} sPathIn url path
+ * @param {string} path 原始请求的地址，不包含查询参数
  * @param {object} query 查询参数
  * @returns
  */
-function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
+function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
   console.log("headers:", headers);
 
-  let query = queryIn || {};
-  console.log("pathIn:", pathIn);
+  let oQuery = oQueryIn || {};
+  console.log("pathIn:", sPathIn);
 
-  console.log("query:", query);
+  console.log("query:", oQuery);
   console.log("path:", path);
   console.log("fullpath", fullpath);
 
   // let metaFullPath = getMetaFullPath(fullpath, schema, host);
 
-  let pathParam = pathIn;
+  let pathParam = sPathIn;
   if (pathParam.startsWith("/")) {
     // check if string starts with "/"
     pathParam = pathParam.substring(1); // remove the first character
@@ -118,16 +120,16 @@ function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
   let oRequest = {};
   oRequest.headers = headers;
   oRequest.URL = {};
-  oRequest.URL.path = pathIn;
-  oRequest.URL.query = query;
+  oRequest.URL.path = sPathIn;
+  oRequest.URL.query = oQuery;
   return getDataFromRequest(oRequest, basePath);
 }
 
 function getDataFromRequest(oRequest, basePath) {
   const metaFullPath = basePath + "$metadata";
   const oQsl = ConvertUrlToQsl(oRequest);
-
   console.log("oQsl:", oQsl);
+
   const q = new Query();
   if (oQsl.isCount) {
     let data = q.Get(oQsl.qsl)[0]["total"];
@@ -138,6 +140,7 @@ function getDataFromRequest(oRequest, basePath) {
     };
   } else {
     const data1 = q.Get(oQsl.qsl);
+
     if (oQsl.format == "json") {
       let data = {
         "@odata.context": `${metaFullPath}#${oQsl.entitySet}`,

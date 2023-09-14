@@ -83,23 +83,25 @@ function convertEntrys(json, sModelName, sBaseUrl) {
   }
   return entrys;
 }
+/**
+ * escape xml string
+ * @param {string} str text need to be escaped
+ * @returns
+ */
 function escapedXmlString(str) {
-  if (!str.hasOwnProperty("replace")) {
+  if (!str || typeof str.replace !== "function") {
     return str;
   }
   const strXml = str.replace(/[&<>"']/g, (char) => {
-    switch (char) {
-      case "&":
-        return "&amp;";
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case '"':
-        return "&quot;";
-      case "'":
-        return "&apos;";
-    }
+    const entityMap = {
+      // Object to map characters to their XML entities
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&apos;",
+    };
+    return entityMap[char] || char; // Return XML entity if exists, otherwise return original character
   });
   return strXml;
 }

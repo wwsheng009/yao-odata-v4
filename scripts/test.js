@@ -19,4 +19,4 @@ Odata-version: 4.0
   var aBatchParts = sResponseBody.split(reg);
   console.log(aBatchParts);
 }
-test();
+// test();

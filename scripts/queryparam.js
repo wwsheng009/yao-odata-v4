@@ -1,4 +1,5 @@
 const { getModel } = Require("model");
+const { defaultParser: odataParser } = Require("parser.v4.parser");
 
 const functions = Require("lib");
 
@@ -41,12 +42,47 @@ const validator = {
   },
 };
 
+/**
+ * convert the query object into query string
+ * @param {object} oQuery query object
+ * @returns string
+ */
+function queryObjectToUrl(oQuery) {
+  let sParams = "";
+  for (const key in oQuery) {
+    if (oQuery.hasOwnProperty(key)) {
+      const value = Array.isArray(oQuery[key])
+        ? oQuery[key].join(",")
+        : oQuery[key];
+      // sParams += `${decodeURIComponent(key)}=${decodeURIComponent(value)}&`;
+      sParams += `${key}=${value}&`;
+    }
+  }
+  if (sParams.endsWith("&")) {
+    sParams = sParams.slice(0, -1);
+  }
+  return sParams;
+}
+function sRequestUrl(sUrl) {}
 function ConvertUrlToQsl(oUrl) {
   // console.log("oUrl====>", oUrl);
   const headers = oUrl.headers;
 
   let pathParam = oUrl.URL.path;
   const query = oUrl.URL.query;
+
+  let sRequestUrl = queryObjectToUrl(query);
+
+  if (sRequestUrl !== "") {
+    sRequestUrl = `${pathParam}?${sRequestUrl}`;
+  } else {
+    sRequestUrl = pathParam;
+  }
+  const q1 = sRequestUrl(sRequestUrl);
+
+  console.log("sRequestUrl:", sRequestUrl);
+  const odataRequest = odataParser.odataUri(sRequestUrl);
+  console.log("odataRequest:", odataRequest);
 
   if (pathParam.startsWith("/")) {
     // check if string starts with "/"

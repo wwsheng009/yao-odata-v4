@@ -1,4 +1,6 @@
 const { getModelsEntityset } = Require("model");
+const { getEntryMetaDataXml, getMetaDataXml2, convertJsonToXml } =
+  Require("odata.lib.process");
 
 const { decodePartsRequest } = Require("decodebatch");
 const { ConvertUrlToQsl } = Require("queryparam");
@@ -62,7 +64,11 @@ ${sResponse}
   sResponseBody = sResponseBody.replace(/\n/g, "\r\n");
   return sResponseBody;
 }
-
+function getBasePath(fullpath, schema, host) {
+  let rootpath = fullpath.split("/").slice(0, -1).join("/");
+  let fullPath = `${schema}://${host}${rootpath}/`;
+  return fullPath;
+}
 function getMetaFullPath(fullpath, schema, host) {
   let rootpath = fullpath.split("/").slice(0, -1).join("/");
   let metapath = `${rootpath}/$metadata`;
@@ -93,6 +99,8 @@ function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
     // check if string starts with "/"
     pathParam = pathParam.substring(1); // remove the first character
   }
+  let basePath = getBasePath(fullpath, schema, host);
+
   //元数据
   if (pathParam == "$" || pathParam == "") {
     return {
@@ -114,10 +122,12 @@ function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
   oRequest.URL = {};
   oRequest.URL.path = pathIn;
   oRequest.URL.query = query;
-  return getDataFromRequest(oRequest, metaFullPath);
+  return getDataFromRequest(oRequest, basePath);
 }
 
-function getDataFromRequest(oRequest, metaFullPath) {
+function getDataFromRequest(oRequest, basePath) {
+  const metaFullPath = basePath + "$metadata";
+
   const oQsl = ConvertUrlToQsl(oRequest);
   console.log("oQsl:", oQsl);
   const q = new Query();
@@ -130,6 +140,7 @@ function getDataFromRequest(oRequest, metaFullPath) {
     };
   } else {
     const data1 = q.Get(oQsl.qsl);
+    console.log("data1:", data1);
     if (oQsl.format == "json") {
       let data = {
         "@odata.context": `${metaFullPath}#${oQsl.entitySet}`,
@@ -147,6 +158,14 @@ function getDataFromRequest(oRequest, metaFullPath) {
 
       return {
         type: "application/json;charset=utf-8",
+        status: 200,
+        data: data,
+      };
+    } else {
+      const data = convertJsonToXml(data1, oQsl.entitySet, basePath);
+      return {
+        // type: "application/atom+xml;type=feed;charset=utf-8",
+        type: "application/atom+xml;charset=utf-8",
         status: 200,
         data: data,
       };

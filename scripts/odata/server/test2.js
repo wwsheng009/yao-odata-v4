@@ -1,4 +1,4 @@
-const { defaultParser } = require("./odataParser");
+const { defaultParser } = require("./lib/parser");
 // const { defaultParser } = Require("bound");
 
 //yao run scripts.test2.test
@@ -15,4 +15,4 @@ function test() {
   //   console.log(ast2);
 }
 
-test();
+// test();
