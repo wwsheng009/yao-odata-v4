@@ -211,10 +211,10 @@ function getHeaderParameterValue(sHeaderValue, sParameterName) {
 // }
 
 function decodePartsRequest(headers, parts) {
-  let contentType = "";
-  if (headers["Content-Type"] && headers["Content-Type"].length) {
-    contentType = headers["Content-Type"][0];
-  }
+  // let contentType = "";
+  // if (headers["Content-Type"] && headers["Content-Type"].length) {
+  //   contentType = headers["Content-Type"][0];
+  // }
 
   let aRequest = [];
   parts.forEach((sBatchPart) => {
@@ -289,36 +289,36 @@ function decodePartsRequest(headers, parts) {
   //   deserializeBatchResponse(contentType, body);
 }
 
-const headers = {
-  Accept: ["multipart/mixed"],
-  "Accept-Encoding": ["gzip, deflate, br"],
-  "Accept-Language": ["zh-CN"],
-  Connection: ["close"],
-  "Content-Length": ["408"],
-  "Content-Type": ["multipart/mixed; boundary=batch_id-1693739362678-19"],
-  "Mime-Version": ["1.0"],
-  "Odata-Maxversion": ["4.0"],
-  "Odata-Version": ["4.0"],
-  Origin: ["http://localhost:8080"],
-  Referer: ["http://localhost:8080/index.html"],
-  "Sec-Ch-Ua": [
-    '"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"',
-  ],
-  "Sec-Ch-Ua-Mobile": ["?0"],
-  "Sec-Ch-Ua-Platform": ['"Windows"'],
-  "Sec-Fetch-Dest": ["empty"],
-  "Sec-Fetch-Mode": ["cors"],
-  "Sec-Fetch-Site": ["same-origin"],
-  "User-Agent": [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
-  ],
-  "X-Csrf-Token": ["123123"],
-  "X-Requested-With": ["XMLHttpRequest"],
-};
+// const headers = {
+//   Accept: ["multipart/mixed"],
+//   "Accept-Encoding": ["gzip, deflate, br"],
+//   "Accept-Language": ["zh-CN"],
+//   Connection: ["close"],
+//   "Content-Length": ["408"],
+//   "Content-Type": ["multipart/mixed; boundary=batch_id-1693739362678-19"],
+//   "Mime-Version": ["1.0"],
+//   "Odata-Maxversion": ["4.0"],
+//   "Odata-Version": ["4.0"],
+//   Origin: ["http://localhost:8080"],
+//   Referer: ["http://localhost:8080/index.html"],
+//   "Sec-Ch-Ua": [
+//     '"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"',
+//   ],
+//   "Sec-Ch-Ua-Mobile": ["?0"],
+//   "Sec-Ch-Ua-Platform": ['"Windows"'],
+//   "Sec-Fetch-Dest": ["empty"],
+//   "Sec-Fetch-Mode": ["cors"],
+//   "Sec-Fetch-Site": ["same-origin"],
+//   "User-Agent": [
+//     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
+//   ],
+//   "X-Csrf-Token": ["123123"],
+//   "X-Requested-With": ["XMLHttpRequest"],
+// };
 
-const parts = [
-  'GET table?$select=browser,engine,id,platform,version\u0026$skip=0\u0026$top=10 HTTP/1.1\r\nAccept:application/json;odata.metadata=minimal;IEEE754Compatible=true\r\nAccept-Language:zh-CN\r\nX-CSRF-Token:123123\r\nContent-Type:application/json;charset=UTF-8;IEEE754Compatible=true\r\n\r\n{\r\n    "test":"test"\r\n}\r\n',
-  "GET table?$select=browser,engine,id,platform,version\u0026$skip=0\u0026$top=10 HTTP/1.1\r\nAccept:application/json;odata.metadata=minimal;IEEE754Compatible=true\r\nAccept-Language:zh-CN\r\nX-CSRF-Token:123123\r\nContent-Type:application/json;charset=UTF-8;IEEE754Compatible=true\r\n\r\n",
-];
+// const parts = [
+//   'GET table?$select=browser,engine,id,platform,version\u0026$skip=0\u0026$top=10 HTTP/1.1\r\nAccept:application/json;odata.metadata=minimal;IEEE754Compatible=true\r\nAccept-Language:zh-CN\r\nX-CSRF-Token:123123\r\nContent-Type:application/json;charset=UTF-8;IEEE754Compatible=true\r\n\r\n{\r\n    "test":"test"\r\n}\r\n',
+//   "GET table?$select=browser,engine,id,platform,version\u0026$skip=0\u0026$top=10 HTTP/1.1\r\nAccept:application/json;odata.metadata=minimal;IEEE754Compatible=true\r\nAccept-Language:zh-CN\r\nX-CSRF-Token:123123\r\nContent-Type:application/json;charset=UTF-8;IEEE754Compatible=true\r\n\r\n",
+// ];
 // decodePartsRequest(headers, parts);
 module.exports = { decodePartsRequest };

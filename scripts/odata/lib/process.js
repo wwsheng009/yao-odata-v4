@@ -3,6 +3,11 @@ const { getModels, getModel } = Require("model");
 const { Metadata } = Require("odata.lib.meta");
 const { XmlWriter } = Require("odata.lib.xml");
 
+/**
+ * 获取模型列表
+ * @param {string} base 
+ * @returns 
+ */
 function getEntryMetaDataXml(base) {
   // https://services.odata.org/V2/OData/OData.svc/
   const nameList = getModelNameList();
@@ -22,6 +27,10 @@ function getEntryMetaDataXml(base) {
 </service>`;
 }
 
+/**
+ * 获取所有模型的元数据信息
+ * @returns 
+ */
 function getMetaDataXml2() {
   const models = getModels();
   const meta = new Metadata(models);
@@ -32,6 +41,13 @@ function getMetaDataXml2() {
   return ret;
 }
 
+/**
+ * 转换json数据成xml定义
+ * @param {object} json 
+ * @param {string} sModelName 
+ * @param {string} sBaseUrl 
+ * @returns 
+ */
 function convertJsonToXml(json, sModelName, sBaseUrl) {
   const entrys = convertEntrys(json, sModelName, sBaseUrl);
 
@@ -45,6 +61,13 @@ function convertJsonToXml(json, sModelName, sBaseUrl) {
 </feed>`;
   return xml;
 }
+/**
+ * 转换JSON数据，
+ * @param {Array} json 
+ * @param {string} sModelName 
+ * @param {string} sBaseUrl 
+ * @returns 
+ */
 function convertEntrys(json, sModelName, sBaseUrl) {
   const model = getModel(sModelName);
 
@@ -56,9 +79,7 @@ function convertEntrys(json, sModelName, sBaseUrl) {
       const key = col.name;
       if (Object.hasOwnProperty.call(item, key)) {
         // column info
-
         let element = item[key];
-
         let edmType = getEdmType(col);
         // edmType = "Edm.String";
         if (edmType == "Edm.String") {
@@ -106,6 +127,11 @@ function escapedXmlString(str) {
   return strXml;
 }
 
+/**
+ * 根据yao模型字段信息，获取edm模型字段的类型定义
+ * @param {object} column 
+ * @returns 
+ */
 function getEdmType(column) {
   let newColumn = {};
   const type = column.type.toUpperCase();

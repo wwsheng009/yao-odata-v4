@@ -5,75 +5,76 @@
   "group": "",
   "guard": "-",
   "paths": [
-    {
-      // api/v1/odata/service/
-      "path": "/service/*path",
-      "method": "GET",
-      "guard": "cross-origin",
-      "process": "scripts.odata.getData",
-      "in": [
-        "$param.path",
-        ":query",
-        ":headers",
-        ":host",
-        ":path",
-        ":schema",
-        ":fullpath"
-      ],
-      "out": {
-        "status": 200,
-        "Body": "{{data}}",
-        "Headers": { "Content-Type": "{{type}}", "odata-version": "4.0" }
-      }
-    },
-    {
-      // api/v1/odata/service/
-      "path": "/service/*path",
-      "method": "POST",
-      "guard": "cross-origin",
-      "process": "scripts.odata.postData",
-      "in": [
-        "$param.path",
-        ":query",
-        ":headers",
-        ":host",
-        ":path",
-        ":schema",
-        ":fullpath",
-        ":payload",
-        ":multi-parts"
-      ],
-      "out": {
-        "status": 200,
-        "Headers": {
-          "Content-Type": "multipart/mixed;boundary=batch_foobarbaz",
-          "odata-version": "4.0"
-        }
-      }
-    },
-    {
-      // api/v1/odata/service/
-      "path": "/service/*path",
-      "method": "OPTIONS",
-      "guard": "cross-origin",
-      "process": "scripts.odata.head",
-      "in": [],
-      "out": {
-        "status": 200
-      }
-    },
-
-    {
-      // api/v1/odata/service/
-      "path": "/service/",
-      "method": "HEAD",
-      "guard": "cross-origin",
-      "process": "scripts.odata.head",
-      "in": [],
-      "out": {
-        "status": 200,
-        "Headers": { "X-CSRF-Token": "123123" }
-      }
-    }
+    // {
+    //   // api/v1/odata/service/
+    //   "path": "/service/*path",
+    //   "method": "GET",
+    //   "guard": "cross-origin",
+    //   "process": "scripts.odata.getData",
+    //   "in": [
+    //     "$param.path",
+    //     ":query",
+    //     ":headers",
+    //     ":host",
+    //     ":path",
+    //     ":schema",
+    //     ":fullpath"
+    //   ],
+    //   "out": {
+    //     "status": 200,
+    //     "Body": "{{data}}",
+    //     "Headers": { "Content-Type": "{{type}}", "odata-version": "4.0" }
+    //   }
+    // },
+    // {
+    //   // api/v1/odata/service/
+    //   "path": "/service/*path",
+    //   "method": "POST",
+    //   "guard": "cross-origin",
+    //   "process": "scripts.odata.postData",
+    //   "in": [
+    //     "$param.path",
+    //     ":query",
+    //     ":headers",
+    //     ":host",
+    //     ":path",
+    //     ":schema",
+    //     ":fullpath",
+    //     ":payload",
+    //     ":multi-parts"
+    //   ],
+    //   "out": {
+    //     "status": 200,
+    //     "Headers": {
+    //       "Content-Type": "multipart/mixed;boundary=batch_foobarbaz",
+    //       "odata-version": "4.0"
+    //     }
+    //   }
+    // },
+    // {
+    //   // api/v1/odata/service/
+    //   "path": "/service/*path",
+    //   "method": "OPTIONS",
+    //   "guard": "-",
+    //   "process": "scripts.odata.head",
+    //   "in": [],
+    //   "out": {
+    //     "status": 200
+    //   }
+    // },
+    // {
+    //   // api/v1/odata/service/
+    //   "path": "/service/",
+    //   "method": "HEAD",
+    //   "guard": "-",
+    //   "process": "scripts.odata.head",
+    //   "in": [],
+    //   "out": {
+    //     "status": 200,
+    //     "Headers": {
+    //       "X-CSRF-Token": "123123"
+    //     }
+    //   }
+    // }
   ]
 }

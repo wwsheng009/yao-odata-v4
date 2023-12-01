@@ -1,5 +1,10 @@
 //yao run scripts.async.test
-
+function test2(id) {
+  let ret = {
+    data: `your request:${id}`,
+  };
+  return ret;
+}
 function test() {
   log("run1 start", printNow());
   let promise1 = ReturnPromiseString("hello");
@@ -8,7 +13,9 @@ function test() {
   let promise2 = ReturnPromiseString2("hello");
   const promises = [promise1, promise2];
 
-  let ret = "x1";
+  let ret = {
+    data: "message from server",
+  };
 
   Promise.resolve("Hello").then(() => {
     ret = "xxx";

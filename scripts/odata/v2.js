@@ -1,10 +1,9 @@
 const { getEntryMetaDataXml, getMetaDataXml2, convertJsonToXml } =
   Require("odata.lib.process");
 
-const { decodePartsRequest } = Require("decodebatch");
 const { ConvertUrlToQsl } = Require("queryparam");
+const { decodePartsRequest } = Require("decodebatch");
 
-function head() {}
 
 function postData(
   pathIn,
@@ -25,7 +24,7 @@ function postData(
   let metaFullPath = getMetaFullPath(fullpath, schema, host);
 
   if (pathIn === "/$batch") {
-    return processBatchPost(headers, parts);
+    return processBatchPost(metaFullPath, headers, parts);
   }
 }
 
@@ -71,12 +70,18 @@ function getMetaFullPath(fullpath, schema, host) {
   return metaFullPath;
 }
 
+/**
+ * odata请求的形式一般是 /xx_table/$format=xx
+ * @param {string} fullpath 
+ * @param {string} schema http| https
+ * @param {string} host 
+ * @returns 
+ */
 function getBasePath(fullpath, schema, host) {
   let rootpath = fullpath.split("/").slice(0, -1).join("/");
   let fullPath = `${schema}://${host}${rootpath}/`;
   return fullPath;
 }
-
 /**
  * 转换查询参数
  * 注意：golang 不支持在query里带有符号;
@@ -86,16 +91,14 @@ function getBasePath(fullpath, schema, host) {
  * @returns
  */
 function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
-  console.log("headers:", headers);
+  // console.log("headers:", headers);
 
   let oQuery = oQueryIn || {};
   console.log("pathIn:", sPathIn);
 
-  console.log("query:", oQuery);
-  console.log("path:", path);
-  console.log("fullpath", fullpath);
-
-  // let metaFullPath = getMetaFullPath(fullpath, schema, host);
+  // console.log("query:", oQuery);
+  // console.log("path:", path);
+  // console.log("fullpath", fullpath);
 
   let pathParam = sPathIn;
   if (pathParam.startsWith("/")) {
@@ -104,14 +107,17 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
   }
   let basePath = getBasePath(fullpath, schema, host);
 
-  //元数据
+
+  // 不是请求元数据，而是/$，请求模型列表
   if (pathParam == "$" || pathParam == "") {
     return {
+      // 获取模型列表
       data: getEntryMetaDataXml(basePath),
       type: "application/xml;charset=utf-8",
       status: 200,
     };
   }
+  //查询元数据的请求
   if (pathParam == "$metadata") {
     let data = getMetaDataXml2();
     return data;
@@ -178,16 +184,16 @@ function getDataFromRequest(oRequest, basePath) {
  * @param {string} service 服务
  * @returns
  */
-function getMetaData() {
-  return Process("scripts.main.test");
-}
+// function getMetaData() {
+//   return Process("scripts.main.test");
+// }
 
-const query = {
-  $select: ["Rating,ReleaseDate"],
-  $orderby: ["engine asc, browser desc"],
-  // $count: true,
-  $filter: ["grade lt 10.00"],
-};
+// const query = {
+//   $select: ["Rating,ReleaseDate"],
+//   $orderby: ["engine asc, browser desc"],
+//   // $count: true,
+//   $filter: ["grade lt 10.00"],
+// };
 // getData("/table/", query);
 
 // http://localhost:5099/api/v1/odata/service/Products?$select=Rating,ReleaseDate

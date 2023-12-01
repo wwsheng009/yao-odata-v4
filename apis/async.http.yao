@@ -11,8 +11,10 @@
       "path": "test",
       "method": "get",
       "guard": "-",
-      "process": "scripts.async.test",
-      "in": [],
+      "process": "scripts.async.test2",
+      "in": [
+        "$query.id"
+      ],
       "out": {
         "status": 200,
         "type": "application/json"

@@ -1,5 +1,5 @@
 const { getModel } = Require("model");
-const { defaultParser: odataParser } = Require("parser.v4.parser");
+// const { defaultParser: odataParser } = Require("parser.v4.parser");
 
 const functions = Require("lib");
 
@@ -63,7 +63,8 @@ function queryObjectToUrl(oQuery) {
   }
   return sParams;
 }
-function sRequestUrl(sUrl) {}
+// function sRequestUrl(sUrl) { }
+
 function ConvertUrlToQsl(oUrl) {
   // console.log("oUrl====>", oUrl);
   const headers = oUrl.headers;
@@ -78,11 +79,11 @@ function ConvertUrlToQsl(oUrl) {
   } else {
     sRequestUrl = pathParam;
   }
-  const q1 = sRequestUrl(sRequestUrl);
+  // const q1 = sRequestUrl(sRequestUrl);
 
-  console.log("sRequestUrl:", sRequestUrl);
-  const odataRequest = odataParser.odataUri(sRequestUrl);
-  console.log("odataRequest:", odataRequest);
+  // console.log("sRequestUrl:", sRequestUrl);
+  // const odataRequest = odataParser.odataUri(sRequestUrl);
+  // console.log("odataRequest:", odataRequest);
 
   if (pathParam.startsWith("/")) {
     // check if string starts with "/"

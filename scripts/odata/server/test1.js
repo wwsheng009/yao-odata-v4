@@ -1,7 +1,7 @@
 // const defaultParser = Require("parser.v4.parser");
 
 //yao run scripts.parser.v4.test1.dummy
-function dummy() {}
+function dummy() { }
 
 console.log(typeof Require === "function");
 console.log(typeof Require);
@@ -20,5 +20,5 @@ if (typeof Require != "function") {
     return require(file);
   };
 }
-const Edm = Require("scripts.parser.v4.edm");
-console.log(Edm);
+// const Edm = Require("scripts.parser.v4.edm");
+// console.log(Edm);
